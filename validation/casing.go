@@ -15,14 +15,16 @@ import (
 // Phase 3 migrated all 22 resources in the migration inventory to
 // canonical camelCase wire form (see docs/schema-tooling.md),
 // and Phase 4.A administratively closed with every legacy directory
-// carrying `info.x-deprecated: true`. The canonical walker
-// (validation/audit.go::walkValidatedConstructSpecs) skips deprecated
-// specs and only processes the latest non-deprecated API version per
-// construct, so the historical lowercase-suffix names enumerated by the
-// old allowlist (`userid`, `orgid`, `workspaceid`, `pageurl`,
-// `avatarurl`, …) can no longer reach the audit on any live resource:
-// the only occurrences that remain in the source tree are inside
-// deprecated legacy directories.
+// carrying `info.x-deprecated: true`. The audit walker
+// (validation/audit.go::walkAuditConstructSpecs) applies blocking rules only
+// to deprecated specs and full rules only to the latest non-deprecated
+// version per construct; the shared endpoint-index walker
+// (walkValidatedConstructSpecs) skips deprecated specs entirely. Casing rules
+// are not in the deprecated blocking-only set, so the historical
+// lowercase-suffix names enumerated by the old allowlist (`userid`, `orgid`,
+// `workspaceid`, `pageurl`, `avatarurl`, …) can no longer reach the audit on
+// any live resource: the only occurrences that remain in the source tree are
+// inside deprecated legacy directories.
 //
 // Per Agent 4.D's charter the allowlist is retired. The map is left
 // empty so `HasLowercaseSuffix` keeps its public signature and

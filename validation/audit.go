@@ -31,8 +31,8 @@ type constructSpec struct {
 	Deprecated bool
 }
 
-// walkValidatedConstructSpecs is the single, canonical walker for the
-// schemas/constructs tree. It visits every non-deprecated construct spec in
+// walkValidatedConstructSpecs is the canonical walker for non-deprecated
+// construct specs in the schemas/constructs tree. It visits them in
 // deterministic sorted order and invokes fn for each one: constructs whose
 // api.yml declares info.x-deprecated: true are skipped, and only the latest
 // valid version per construct is visited. The consumer-audit endpoint indexer
